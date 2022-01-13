@@ -1,7 +1,8 @@
-package repository;
+package com.magsad.repository;
 
-import config.DBConnection;
-import entity.Employee;
+import com.magsad.config.DBConnection;
+import com.magsad.model.Department;
+import com.magsad.model.Employee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository {
-    private DBConnection dbConnection = new DBConnection();
+    public static final DBConnection dbConnection = new DBConnection();
 
     public List<Employee> findAll(){
         List<Employee> employeeList = new ArrayList<>();
@@ -27,26 +28,26 @@ public class EmployeeRepository {
                         resultSet.getString("email"),
                         resultSet.getString("phone"),
                         resultSet.getString("address"),
-                        resultSet.getInt("dept_id")
+                        findDepartmentById(resultSet.getInt("dept_id"))
+//                        departmentRepository.findById(resultSet.getInt("dept_id")) //comment cause - stackoverflow
+//                        new Department()
+//                        resultSet.getInt("dept_id")
                 );
                 employeeList.add(e);
-                //1:34:11
-                //System.out.println(e);
+
             }
-        }catch (SQLException throwables){
-            throwables.getMessage();
+        }catch (SQLException throwable){
+            System.out.println(throwable.getMessage());
         }
         return employeeList;
     }
 
     public Employee findById(int id) {
-        Employee employee = new Employee();
         try (Connection connection = dbConnection.getConnection()) {
             String sqlQuerySelectById = "select * from employees where id = ?";
             PreparedStatement psSelectById = connection.prepareStatement(sqlQuerySelectById);
             psSelectById.setInt(1,id);
             ResultSet resultSet = psSelectById.executeQuery();
-            System.out.println("resultSet" + resultSet.toString());
             if (resultSet.next()){
                 return new Employee(
                         resultSet.getInt("id"),
@@ -55,11 +56,14 @@ public class EmployeeRepository {
                         resultSet.getString("email"),
                         resultSet.getString("phone"),
                         resultSet.getString("address"),
-                        resultSet.getInt("dept_id")
+                        findDepartmentById(resultSet.getInt("dept_id"))
+//                        departmentRepository.findById(resultSet.getInt("dept_id")) //comment cause - stackoverflow
+//                        new Department()
+//                        resultSet.getInt("dept_id")
                 );
             }
-        } catch (SQLException throwables) {
-            throwables.getMessage();
+        } catch (SQLException throwable) {
+            System.out.println(throwable.getMessage());
         }
         return null;
     }
@@ -75,7 +79,7 @@ public class EmployeeRepository {
             psInsert.setString(4, emp.getEmail());
             psInsert.setString(5, emp.getPhone());
             psInsert.setString(6, emp.getAddress());
-            psInsert.setInt(7, emp.getDeptId());
+            psInsert.setInt(7, emp.getDepartment().getId());
 
             queryResult = psInsert.executeUpdate();
             System.out.println(queryResult);
@@ -83,8 +87,8 @@ public class EmployeeRepository {
                 System.out.println("Inserted!");
             }
 
-        } catch (SQLException throwables) {
-            throwables.getMessage();
+        } catch (SQLException throwable) {
+            System.out.println(throwable.getMessage());
         }
         return queryResult;
     }
@@ -99,7 +103,7 @@ public class EmployeeRepository {
             psUpdate.setString(3, emp.getEmail());
             psUpdate.setString(4, emp.getPhone());
             psUpdate.setString(5, emp.getAddress());
-            psUpdate.setInt(6, emp.getDeptId());
+            psUpdate.setInt(6, emp.getDepartment().getId());
             psUpdate.setInt(7, emp.getId());
 
             queryResult = psUpdate.executeUpdate();
@@ -108,8 +112,8 @@ public class EmployeeRepository {
                 System.out.format("Id %d employee was Updated!\n",emp.getId());
             }
 
-        } catch (SQLException throwables) {
-            throwables.getMessage();
+        } catch (SQLException throwable) {
+            System.out.println(throwable.getMessage());
         }
         return queryResult;
     }
@@ -121,13 +125,64 @@ public class EmployeeRepository {
             PreparedStatement psDelete = connection.prepareStatement(sqlQueryDelete);
             psDelete.setInt(1, emp.getId());//1ci ? isaresinin evezine yazilir.2ci sual isaresi yoxdur.
             queryResult = psDelete.executeUpdate();
-            System.out.println(queryResult);
             if (queryResult != 0) {
                 System.out.println("Deleted!");
             }
-        } catch (SQLException throwables) {
-            throwables.getMessage();
+        } catch (SQLException throwable) {
+            System.out.println(throwable.getMessage());
         }
         return queryResult;
+    }
+
+    public Department findDepartmentById(int id) {
+        try (Connection connection = dbConnection.getConnection()) {
+            String sqlQuerySelectById = "select * from departments where id = ?";
+            PreparedStatement psSelectById = connection.prepareStatement(sqlQuerySelectById);
+            psSelectById.setInt(1,id);
+            ResultSet resultSet = psSelectById.executeQuery();
+            if (resultSet.next()){
+                Department department = new Department(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("phone"),
+                        new ArrayList<>()
+                );
+                return department;
+            }
+        } catch (SQLException throwable) {
+            System.out.println(throwable.getMessage());
+        }
+        return null;
+    }
+
+    public List<Employee> findByDepartment(Department department){
+        List<Employee> employeeList = new ArrayList<>();
+        try (Connection connection = dbConnection.getConnection()){
+            String sqlQuerySelectAllByDepart = "select * from employees where dept_id=? order by id";
+            PreparedStatement psSelectAllByDepart = connection.prepareStatement(sqlQuerySelectAllByDepart);
+            psSelectAllByDepart.setInt(1,department.getId());
+            ResultSet resultSet = psSelectAllByDepart.executeQuery();
+            while (resultSet.next()){
+                Employee e = new Employee(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        findDepartmentById(resultSet.getInt("dept_id"))
+//                        departmentRepository.findById(resultSet.getInt("dept_id")) //comment cause - stackoverflow
+
+//                        new Department()
+//                        resultSet.getInt("dept_id")
+                );
+                employeeList.add(e);
+//                System.out.println(e);
+                return employeeList;
+            }
+        }catch (SQLException throwable){
+            System.out.println(throwable.getMessage());
+        }
+        return null;
     }
 }

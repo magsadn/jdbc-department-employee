@@ -1,4 +1,6 @@
-package entity;
+package com.magsad.util.employee;
+
+import com.magsad.model.Employee;
 
 import java.util.Scanner;
 
@@ -12,7 +14,7 @@ public class UpdateEmployee {
 
             if (select == 6) {
                 System.out.print("deptId: ");
-                e.setDeptId(sc.nextInt());
+//                e.setDeptId(sc.nextInt());
             }
             if (select == 5) {
                 System.out.print("address: ");

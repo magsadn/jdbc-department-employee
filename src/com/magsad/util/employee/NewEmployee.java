@@ -1,4 +1,6 @@
-package entity;
+package com.magsad.util.employee;
+
+import com.magsad.model.Employee;
 
 import java.util.Scanner;
 
@@ -18,8 +20,8 @@ public class NewEmployee {
         e.setPhone(sc.next());
         System.out.print("address: ");
         e.setAddress(sc.next());
-        System.out.print("deptId: ");
-        e.setDeptId(sc.nextInt());
+//        System.out.print("deptId: ");
+//        e.setDeptId(sc.nextInt());
         return e;
     }
 }

@@ -1,17 +1,22 @@
-import entity.Employee;
-import entity.NewEmployee;
-import entity.UpdateEmployee;
-import repository.EmployeeRepository;
+package com.magsad.service;
+
+import com.magsad.model.Employee;
+import com.magsad.util.employee.NewEmployee;
+import com.magsad.util.employee.UpdateEmployee;
+import com.magsad.repository.DepartmentRepository;
+import com.magsad.repository.EmployeeRepository;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class EmployeeService {
     private static EmployeeRepository employeeRepository = new EmployeeRepository();
-    public static void main(String[] args) {
+    private static DepartmentRepository departmentRepository = new DepartmentRepository();
+
+    public void getEmployee(){
         do {
             System.out.println("\n1.New 2.FindAll 3.FindById 4.Delete 5.Update 0.Exit");
-            System.out.print("Enter main/select: ");
+            System.out.print("Enter com.magsad.Main/Employee select: ");
             int select = new Scanner(System.in).nextInt();
             if (select == 5){
                 update();
@@ -30,7 +35,6 @@ public class Main {
         }while (true);
     }
 
-
     private static void findAll(){
         List<Employee> employeeList = employeeRepository.findAll();
         employeeList.stream().forEach(e -> System.out.print(getPrint(e)));
@@ -45,6 +49,8 @@ public class Main {
 
     private static void save (){
         Employee e = NewEmployee.getNewEmployee();
+        System.out.print("deptId: ");
+        e.setDepartment(departmentRepository.findById(new Scanner(System.in).nextInt()));
         System.out.println(employeeRepository.save(e));
     }
 
@@ -55,6 +61,7 @@ public class Main {
         Employee e = employeeRepository.findById(id);
         System.out.println(getPrint(e));
         UpdateEmployee.updateEmployee(e);
+
         System.out.println(employeeRepository.update(e));
     }
 
@@ -73,7 +80,7 @@ public class Main {
                 e.getEmail(),
                 e.getPhone(),
                 e.getAddress(),
-                e.getDeptId());
+                e.getDepartment().getId()
+        );
     }
-
 }
