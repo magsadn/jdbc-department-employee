@@ -1,4 +1,4 @@
-# jdbc-employee-department
+# jdbc-department-employee
 
 <div id="top"></div>
 
@@ -8,18 +8,18 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/magsadn/jdbc-employees">
+  <a href="https://github.com/magsadn/jdbc-department-employee">
     <img src= "employees-office-people-actively-working-environment-white-background-58757246.jpg" width="250" height="200">
   </a>
 
-<h3 align="center">jdbc-employee-department</h3>
+<h3 align="center">jdbc-department-employee</h3>
 
   <p align="center">
     <br />
-    <a href="https://github.com/magsadn/jdbc-employees"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/magsadn/jdbc-department-employee"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/magsadn/jdbc-employees/issues">Report Bug</a>
+    <a href="https://github.com/magsadn/jdbc-department-employee/issues">Report Bug</a>
   </p>
 </div>
 
@@ -29,9 +29,9 @@
 **JDBC -**
 Java™ database connectivity is the JavaSoft specification of a standard application programming interface (API) that allows Java programs to access database management systems. The JDBC API consists of a set of interfaces and classes written in the Java programming language.
 
-In this **jdbc-employees** command line application I used DBConnection, PostgresqlDriver and CRUD methods to create new employee, find all employees, find employee by id, update and delete employees from the PostgreSQL database.
+In this **jdbc-department-employee** command line application I used DBConnection, PostgresqlDriver and CRUD methods to create new employee, find all department or employee, find department or employee by id, update and delete department or employee from the PostgreSQL database.
 
-###Database
+### Database
 I used PostgreSQL database.
 SQL scripts is here: [queries.sql]
 
@@ -49,11 +49,6 @@ Don't forget to give the project a star! Thanks again!
 3. Commit your Changes (`git commit -m 'Add some project files'`)
 4. Push to the Branch (`git push origin feature`)
 5. Open a Pull Request
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -78,10 +73,10 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[issues-shield]: https://img.shields.io/github/issues/magsadn/jdbc-employees?style=for-the-badge
-[issues-url]: https://github.com/magsadn/jdbc-employees/issues
-[license-shield]: https://img.shields.io/github/license/magsadn/jdbc-employees?label=license&style=for-the-badge
-[license-url]: https://github.com/magsadn/jdbc-employees/blob/main/LICENSE.txt
+[issues-shield]: https://img.shields.io/github/issues/magsadn/jdbc-department-employee?style=for-the-badge
+[issues-url]: https://github.com/magsadn/jdbc-department-employee/issues
+[license-shield]: https://img.shields.io/github/license/magsadn/jdbc-department-employee?label=license&style=for-the-badge
+[license-url]: https://github.com/magsadn/jdbc-department-employee/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=249
 [linkedin-url]: https://www.linkedin.com/in/magsad/
-[queries.sql]: https://github.com/magsadn/jdbc-employees/blob/main/queries.sql
+[queries.sql]: https://github.com/magsadn/jdbc-department-employee/blob/main/queries.sql
